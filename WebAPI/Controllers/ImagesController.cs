@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +11,13 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : ControllerBase
+    public class ImagesController : ControllerBase
     {
-        ICarService _carService;
+        IImageService _imageService;
 
-        public CarsController(ICarService carService)
+        public ImagesController(IImageService imageService)
         {
-            _carService = carService;
+            _imageService = imageService;
         }
 
         [HttpGet("getall")]
@@ -27,7 +25,7 @@ namespace WebAPI.Controllers
         {
             //Swagger
             //Dependency chain
-            var result = _carService.GetAll();
+            var result = _imageService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -37,27 +35,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            var result = _carService.GetByCarId(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("getbybrandid")]
-        public IActionResult GetByBrandId(int id)
-        {
-            var result = _carService.GetAllByBrandId(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("getallcardetails")]
-        public IActionResult GetAllCarDetails()
-        {
-            var result = _carService.GetAllCarDetails();
+            var result = _imageService.GetByImageId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -66,9 +44,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Car car)
+        public IActionResult Add(Image image)
         {
-            var result = _carService.Add(car);
+            var result = _imageService.Add(image);
             if (result.Success)
             {
                 return Ok(result);
@@ -76,9 +54,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("update")]
-        public IActionResult Update(Car car)
+        public IActionResult Update(Image image)
         {
-            var result = _carService.Update(car);
+            var result = _imageService.Update(image);
             if (result.Success)
             {
                 return Ok(result);
@@ -88,7 +66,7 @@ namespace WebAPI.Controllers
         [HttpPost("deletebyid")]
         public IActionResult DeleteById(int id)
         {
-            var result = _carService.DeleteByCarId(id);
+            var result = _imageService.DeleteByImageId(id);
             if (result.Success)
             {
                 return Ok(result);

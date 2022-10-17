@@ -14,6 +14,9 @@ namespace Business.Constants
         public static string CarUpdated = "Araba Güncellendi";
         public static string CarsListed = "Arabalar listelendi";
         public static string CarModelYearInvalid = "Araba modeli 2005 yılı ve üzeri olmalıdır";
+        public static string CarCountOfBrandError = "Bir markaya ait en fazla 10 kayıt olabilir";
+        public static string CarDescriptionAlreadyExist = "Aynı açıklama tekrar eklenemez";
+        public static string BrandLimitExceded = "Marka limiti aşıldığı için yeni marka eklenemiyor";
 
         public static string ColorAdded = "Renk eklendi";
         public static string ColorDeleted = "Renk Silindi";
@@ -41,5 +44,10 @@ namespace Business.Constants
         public static string RentalDeleted = "Kiralama Silindi";
         public static string RentalUpdated = "Kiralama Güncellendi";
         public static string RentalsListed = "Kiralanan Arabalar listelendi";
+
+        public static string ImageAdded = "Resim eklendi";
+        public static string ImageDeleted = "Resim Silindi";
+        public static string ImageUpdated = "Resim Güncellendi";
+        public static string ImagesListed = "Resimler listelendi";
     }
 }

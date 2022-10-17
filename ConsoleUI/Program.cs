@@ -15,7 +15,7 @@ namespace ConsoleUI
         {
             #region CarTransactions
 
-            CarManager carManager = new CarManager(new EfCarDal());
+            CarManager carManager = new CarManager(new EfCarDal(), new BrandManager(new EfBrandDal()));
 
             //carManager.Add(new Car { BrandId = 1, ColorId = 4, DailyPrice = 123, ModelYear = 2010, Description = "v1" });
             //carManager.Add(new Car { BrandId = 2, ColorId = 6, DailyPrice = 220, ModelYear = 2022, Description = "v2" });

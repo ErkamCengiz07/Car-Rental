@@ -14,24 +14,35 @@ using FluentValidation;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
         ICarDal _carDal;
+        IBrandService _brandService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, IBrandService brandService)
         {
-            this._carDal = carDal;
+            _carDal = carDal;
+            _brandService = brandService;
         }
+
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            //business code
+            IResult result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId), CheckIfCarDescriptionExist(car.Description),
+                CheckIfBrandLimitExceded());
+
+            if (result != null)
+            {
+                return result;
+            }
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
+
         }
 
         public IResult Delete(Car car)
@@ -70,6 +81,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
@@ -81,6 +93,34 @@ namespace Business.Concrete
             var deletedCar = _carDal.GetAll().SingleOrDefault(c => c.CarId == carId);
             _carDal.Delete(deletedCar);
             return new SuccessResult(Messages.CarDeleted);
+        }
+
+        private IResult CheckIfCarCountOfBrandCorrect(int brandId)
+        {
+            var result = _carDal.GetAll().Where(c => c.BrandId == brandId).Count();
+            if (result >= 10)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
+            return new SuccessResult();
+        }
+        private IResult CheckIfCarDescriptionExist(string description)
+        {
+            var result = _carDal.GetAll().Where(c => c.Description == description).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.CarDescriptionAlreadyExist);
+            }
+            return new SuccessResult();
+        }
+        private IResult CheckIfBrandLimitExceded()
+        {
+            var result = _brandService.GetAll();
+            if (result.Data.Count() > 15)
+            {
+                return new ErrorResult(Messages.BrandLimitExceded);
+            }
+            return new SuccessResult();
         }
     }
 }

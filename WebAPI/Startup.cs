@@ -50,6 +50,9 @@ namespace WebAPI
 
             services.AddSingleton<IUserService, UserManager>();
             services.AddSingleton<IUserDal, EfUserDal>();
+
+            services.AddSingleton<IImageService, ImageManager>();
+            services.AddSingleton<IImageDal, EfImageDal>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
