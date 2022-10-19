@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -22,6 +23,12 @@ namespace Business.Concrete
 
         public IResult Add(Image image)
         {
+            IResult result = BusinessRules.Run(CheckIfImageCountCorrect(image.CarId));
+
+            if (result != null)
+            {
+                return result;
+            }
             _imageDal.Add(image);
             return new SuccessResult(Messages.ImageAdded);
         }
@@ -36,7 +43,7 @@ namespace Business.Concrete
         {
             var deletedImage = _imageDal.GetAll().SingleOrDefault(c => c.ImageId == imageId);
             _imageDal.Delete(deletedImage);
-            return new SuccessResult(Messages.CarDeleted);
+            return new SuccessResult(Messages.ImageDeleted);
         }
 
         public IDataResult<List<Image>> GetAll()
@@ -53,6 +60,15 @@ namespace Business.Concrete
         {
             _imageDal.Update(image);
             return new SuccessResult(Messages.ImageUpdated);
+        }
+        private IResult CheckIfImageCountCorrect(int carId)
+        {
+            var Result = _imageDal.GetAll().Where(i => i.CarId == carId).Count();
+            if (Result > 5)
+            {
+                return new ErrorResult(Messages.CarImageCountError);
+            }
+            return new SuccessResult();
         }
     }
 }

@@ -15,6 +15,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
+using Business.BusinessAspects.Autofac;
 
 namespace Business.Concrete
 {
@@ -28,21 +29,20 @@ namespace Business.Concrete
             _carDal = carDal;
             _brandService = brandService;
         }
-
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            IResult result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId), CheckIfCarDescriptionExist(car.Description),
-                CheckIfBrandLimitExceded());
+            //IResult result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId), CheckIfCarDescriptionExist(car.Description),
+            //    CheckIfBrandLimitExceded());
 
-            if (result != null)
-            {
-                return result;
-            }
+            //if (result != null)
+            //{
+            //    return result;
+            //}
 
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
-
         }
 
         public IResult Delete(Car car)

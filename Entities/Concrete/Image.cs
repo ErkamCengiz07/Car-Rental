@@ -9,7 +9,7 @@ namespace Entities.Concrete
     {
         public int ImageId { get; set; }
         public int CarId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
         public String ImagePath { get; set; }
     }
 }

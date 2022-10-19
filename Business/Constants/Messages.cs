@@ -8,6 +8,7 @@ namespace Business.Constants
     public static class Messages
     {
         public static string MaintenanceTime = "Sistem bakımda";
+        public static string AuthorizationDenied = "Yetkiniz yok";
 
         public static string CarAdded = "Araba eklendi";
         public static string CarDeleted = "Araba Silindi";
@@ -30,10 +31,15 @@ namespace Business.Constants
         public static string BrandsListed = "Markalar listelendi";
         public static string BrandNameRepeatInvalid = "Aynı Marka Tekrar Eklenilmeye Çalışıldığı İçin Eklenemedi!!!";
 
-        public static string UserAdded = "Kullanıcı eklendi";
+        public static string UserRegistered = "Kullanıcı Kayıt Edildi";
         public static string UserDeleted = "Kullanıcı Silindi";
         public static string UserUpdated = "Kullanıcı Güncellendi";
         public static string UsersListed = "Kullanıcılar listelendi";
+        public static string UserNotFound = "Kullanıcı Bulunamadı";
+        public static string PasswordError = "Hatalı Şifre";
+        public static string SuccessfulLogin = "Giriş Başarılı";
+        public static string UserAlreadyExists = "Bu kullanıcı zaten kayıtlı";
+        public static string AccessTokenCreated = "Erişim Kodu Üretildi";
 
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerDeleted = "Müşteri Silindi";
@@ -49,5 +55,6 @@ namespace Business.Constants
         public static string ImageDeleted = "Resim Silindi";
         public static string ImageUpdated = "Resim Güncellendi";
         public static string ImagesListed = "Resimler listelendi";
+        public static string CarImageCountError = "Bir arabaya 5'ten fazla resim ekleyemezsin";
     }
 }
